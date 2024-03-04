@@ -11,7 +11,7 @@ from langchain.agents import AgentExecutor
 # Get the prompt to use - you can modify this!
 prompt = hub.pull("hwchase17/openai-functions-agent")
 
-chat = ChatCohere(cohere_api_key="X22hyv54vNN9E9lLYb9C78UGZiJjZiTTC3qbOObs")
+chat = ChatCohere(cohere_api_key="API KEY")
 
 retriever = WikipediaRetriever()
 retriever_tool = create_retriever_tool(
