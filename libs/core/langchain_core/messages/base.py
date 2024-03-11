@@ -166,7 +166,6 @@ class BaseMessageChunk(BaseMessage):
         if isinstance(other, BaseMessageChunk):
             # If both are (subclasses of) BaseMessageChunk,
             # concat into a single BaseMessageChunk
-
             return self.__class__(  # type: ignore[call-arg]
                 id=self.id,
                 content=merge_content(self.content, other.content),
