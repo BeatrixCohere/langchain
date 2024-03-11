@@ -216,9 +216,10 @@ class ChatCohere(BaseChatModel, BaseCohere):
         response = self.client.chat(**request)
 
         message = AIMessage(content=response.text, additional_kwargs=response)
+        generation_info = self._get_generation_info(response)
         return ChatResult(
             generations=[
-                ChatGeneration(message=message, generation_info=response)
+                ChatGeneration(message=message, generation_info=generation_info)
             ]
         )
 
@@ -239,9 +240,10 @@ class ChatCohere(BaseChatModel, BaseCohere):
         response = self.client.chat(**request, stream=False)
 
         message = AIMessage(content=response.text, additional_kwargs=response)
+        generation_info = self._get_generation_info(response)
         return ChatResult(
             generations=[
-                ChatGeneration(message=message, generation_info=response)
+                ChatGeneration(message=message, generation_info=generation_info)
             ]
         )
 

@@ -1,1 +1,1 @@
-"""An agent designed to hold a conversation in addition to using tools."""
+"""An agent designed to use Cohere tools."""
