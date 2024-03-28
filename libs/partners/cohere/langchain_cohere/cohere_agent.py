@@ -1,4 +1,5 @@
 import json
+from json import JSONDecodeError
 from typing import Any, Dict, List, Sequence, Tuple, Type, Union
 
 from cohere.types import (
@@ -8,6 +9,7 @@ from cohere.types import (
     ToolParameterDefinitionsValue,
 )
 from langchain_core.agents import AgentAction, AgentFinish
+from langchain_core.exceptions import OutputParserException
 from langchain_core.language_models import BaseLanguageModel
 from langchain_core.output_parsers import BaseOutputParser
 from langchain_core.outputs import Generation
@@ -166,10 +168,16 @@ class _CohereToolsAgentOutputParser(
             actions = []
             for tool in result[0].message.additional_kwargs["tool_calls"]:
                 function = tool.get("function", {})
+                try:
+                    tool_input = json.loads(function["arguments"] or "{}")
+                except JSONDecodeError:
+                    raise OutputParserException(
+                        f"Could not parse tool input: {function} because the `arguments` is not valid JSON."  # noqa: E501
+                    )
                 actions.append(
                     AgentAction(
                         tool=function.get("name"),
-                        tool_input=function.get("arguments"),
+                        tool_input=tool_input,
                         log=function.get("name"),
                     )
                 )
