@@ -52,7 +52,7 @@ class BaseCohere(Serializable):
 
     client: Any = None  #: :meta private:
     async_client: Any = None  #: :meta private:
-    model: Optional[str] = Field(default=None)
+    model: Optional[str] = Field(default="command-r-plus")
     """Model name to use."""
 
     temperature: Optional[float] = None
